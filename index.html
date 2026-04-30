@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人日志</title>
+    <style>
+        /* 这里就是你想要的自定义背景 */
+        body {
+            /* 使用一张高清晰度的随机风景图作为背景 */
+            background: url('https://picsum.photos/1920/1080?nature') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: -apple-system, "Helvetica Neue", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+            backdrop-filter: blur(15px); /* 磨砂玻璃效果 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 400px;
+        }
+
+        h1 { margin-bottom: 10px; font-size: 1.8rem; }
+        p { opacity: 0.8; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>你好，这是我的第一天</h1>
+        <p>这里将记录我每天学到的新东西和工作心得。</p>
+        <p>—— 2026年4月30日</p>
+    </div>
+</body>
+</html>
