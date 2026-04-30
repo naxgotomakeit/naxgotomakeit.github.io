@@ -1,0 +1,36 @@
+---
+layout: default
+title: Research Notes
+---
+
+<section class="page-hero compact">
+  <p class="eyebrow">Paper Notes · Concept Notes · Direction Maps</p>
+  <h1>Research Notes</h1>
+  <p>
+    Notes on embodied AI, world models, VLA, efficient VLM, egocentric VQA, and robotic systems.
+    These notes help turn reading into research direction and public evidence.
+  </p>
+</section>
+
+<section class="note-list">
+  {% assign research_posts = site.posts | where_exp: "post", "post.categories contains 'research-note'" %}
+  {% for post in research_posts %}
+    <article class="note-card wide">
+      <p class="post-date">{{ post.date | date: "%B %-d, %Y · %H:%M" }}</p>
+      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+      {% if post.tags %}
+        <div class="tag-row small-tags">
+          {% for tag in post.tags %}
+            <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <p>{{ post.excerpt | strip_html | truncate: 220 }}</p>
+      <a class="read-more" href="{{ post.url | relative_url }}">Read note →</a>
+    </article>
+  {% endfor %}
+
+  {% if research_posts.size == 0 %}
+    <p class="empty-state">No research notes yet. Add a Markdown file under <code>_posts/</code> with category <code>research-note</code>.</p>
+  {% endif %}
+</section>

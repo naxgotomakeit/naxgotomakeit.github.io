@@ -1,44 +1,113 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人日志</title>
-    <style>
-        /* 这里就是你想要的自定义背景 */
-        body {
-            /* 使用一张高清晰度的随机风景图作为背景 */
-            background: url('https://picsum.photos/1920/1080?nature') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            font-family: -apple-system, "Helvetica Neue", sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+---
+layout: default
+title: Home
+---
 
-        .container {
-            background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
-            backdrop-filter: blur(15px); /* 磨砂玻璃效果 */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 2rem;
-            border-radius: 20px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 400px;
-        }
-
-        h1 { margin-bottom: 10px; font-size: 1.8rem; }
-        p { opacity: 0.8; line-height: 1.6; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>你好，这是我的第一天</h1>
-        <p>这里将记录我每天学到的新东西和工作心得。</p>
-        <p>—— 2026年4月30日</p>
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Personal AI & Robotics Research Log</p>
+    <h1>I am exploring human-led intelligent robotics — connecting AI, vision, interaction, and embodied systems.</h1>
+    <p class="hero-text">
+      I use multimodal AI and efficient VLM research as an entry point toward future intelligent robotic systems.
+      My long-term interest lies in robots that can understand the world, interpret human intention, and act as an
+      extension of human capability.
+    </p>
+    <div class="hero-actions">
+      <a class="button primary" href="{{ '/daily-log.html' | relative_url }}">Read daily logs</a>
+      <a class="button secondary" href="{{ '/projects.html' | relative_url }}">View my projects →</a>
     </div>
-</body>
-</html>
+  </div>
+
+  <aside class="hero-card">
+    <span class="status-dot"></span>
+    <p class="card-label">Current focus</p>
+    <h2>Efficient Egocentric VQA</h2>
+    <p>
+      Building research evidence around efficient multimodal AI, evidence selection,
+      latency, token usage, API calls, and future robotic perception.
+    </p>
+  </aside>
+</section>
+
+<section class="direction-card">
+  <p class="card-label">Direction Reminder</p>
+  <blockquote>
+    I am not doing AI to move away from robotics. I am doing AI because I want future robots to have a brain
+    that can understand the world, understand humans, and support meaningful action.
+  </blockquote>
+</section>
+
+<section class="intro-grid">
+  <div class="panel">
+    <h2>Why this website exists</h2>
+    <p>
+      This site is not only a static portfolio. It is a living personal research log.
+      I use it to record small daily progress, questions, experiments, failures, and reflections.
+    </p>
+    <p>
+      For structured project summaries, please visit the <a href="{{ '/projects.html' | relative_url }}">Projects page</a>.
+      This homepage mainly records my ongoing daily research process.
+    </p>
+  </div>
+  <div class="panel">
+    <h2>Keywords</h2>
+    <div class="tag-cloud">
+      <span>Embodied AI</span>
+      <span>Vision-Language-Action</span>
+      <span>World Models</span>
+      <span>Efficient VLM</span>
+      <span>Egocentric VQA</span>
+      <span>Robot Learning</span>
+      <span>Robotic Systems</span>
+      <span>Human-led Robotics</span>
+      <span>Shared Autonomy</span>
+    </div>
+  </div>
+</section>
+
+<section class="section-header">
+  <div>
+    <p class="eyebrow">Latest Updates</p>
+    <h2>Daily Log Feed</h2>
+  </div>
+  <a class="text-link" href="{{ '/daily-log.html' | relative_url }}">View all logs →</a>
+</section>
+
+<section class="timeline">
+  {% assign daily_posts = site.posts | where_exp: "post", "post.categories contains 'daily-log'" %}
+  {% assign recent_daily = daily_posts | slice: 0, 10 %}
+  {% assign current_day = "" %}
+
+  {% for post in recent_daily %}
+    {% assign post_day = post.date | date: "%B %-d, %Y" %}
+    {% if post_day != current_day %}
+      {% assign current_day = post_day %}
+      <h2 class="date-heading">{{ current_day }}</h2>
+    {% endif %}
+    {% include log-card.html post=post %}
+  {% endfor %}
+
+  {% if recent_daily.size == 0 %}
+    <p class="empty-state">No daily logs yet. Add a Markdown file under <code>_posts/</code> with category <code>daily-log</code>.</p>
+  {% endif %}
+</section>
+
+<section class="section-header">
+  <div>
+    <p class="eyebrow">Research Thinking</p>
+    <h2>Latest Research Notes</h2>
+  </div>
+  <a class="text-link" href="{{ '/research.html' | relative_url }}">View research notes →</a>
+</section>
+
+<section class="note-list">
+  {% assign research_posts = site.posts | where_exp: "post", "post.categories contains 'research-note'" %}
+  {% assign recent_research = research_posts | slice: 0, 3 %}
+  {% for post in recent_research %}
+    <article class="note-card">
+      <p class="post-date">{{ post.date | date: "%B %-d, %Y" }}</p>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      <p>{{ post.excerpt | strip_html | truncate: 180 }}</p>
+    </article>
+  {% endfor %}
+</section>
