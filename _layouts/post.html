@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<article class="post-page">
+  <div class="post-topline">
+    <a href="{{ '/' | relative_url }}">← Home</a>
+    {% if page.categories contains "daily-log" %}
+      <span>Daily Log</span>
+    {% elsif page.categories contains "research-note" %}
+      <span>Research Note</span>
+    {% endif %}
+  </div>
+
+  <header class="post-header">
+    <p class="post-date">{{ page.date | date: "%B %-d, %Y · %H:%M" }}</p>
+    <h1>{{ page.title }}</h1>
+    {% if page.tags %}
+      <div class="tag-row">
+        {% for tag in page.tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>
