@@ -2,29 +2,104 @@
 layout: default
 ---
 
-<article class="post-page">
-  <div class="post-topline">
-    <a href="{{ '/' | relative_url }}">← Home</a>
-    {% if page.categories contains "daily-log" %}
-      <span>Daily Log</span>
-    {% elsif page.categories contains "research-note" %}
-      <span>Research Note</span>
+<article class="content">
+  <div class="page-hero compact">
+    <p class="eyebrow">
+      {% if page.categories contains 'daily-log' %}
+        Daily Log
+      {% elsif page.categories contains 'research-note' %}
+        Research Note
+      {% else %}
+        Post
+      {% endif %}
+    </p>
+    <h1>{{ page.title }}</h1>
+    <p class="post-date">{{ page.date | date: "%B %-d, %Y · %H:%M" }}</p>
+    {% if page.tags %}
+    <div class="tag-cloud">
+      {% for tag in page.tags %}
+        <span>{{ tag }}</span>
+      {% endfor %}
+    </div>
     {% endif %}
   </div>
-
-  <header class="post-header">
-    <p class="post-date">{{ page.date | date: "%B %-d, %Y · %H:%M" }}</p>
-    <h1>{{ page.title }}</h1>
-    {% if page.tags %}
-      <div class="tag-row">
-        {% for tag in page.tags %}
-          <span class="tag">{{ tag }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </header>
 
   <div class="post-content">
     {{ content }}
   </div>
+
+  <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border);">
+    <a href="javascript:history.back()" class="text-link">← Back</a>
+  </div>
 </article>
+
+<style>
+.post-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text-primary);
+}
+
+.post-content h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.post-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.post-content p {
+  margin-bottom: 1.25rem;
+}
+
+.post-content ul,
+.post-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.post-content li {
+  margin-bottom: 0.5rem;
+  color: var(--color-text-secondary);
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--color-border);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.post-content code {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  background: var(--color-bg-tertiary);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+.post-content pre {
+  background: var(--color-bg-tertiary);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 1.5rem 0;
+}
+</style>

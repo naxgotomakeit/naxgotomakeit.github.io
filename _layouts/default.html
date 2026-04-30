@@ -1,47 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ site.description }}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 </head>
 <body>
-  <div class="site-shell">
-    <header class="site-header">
-      <a class="brand" href="{{ '/' | relative_url }}" aria-label="Nax Lab home">
-        <span class="brand-mark">N</span>
-        <span class="brand-text">Nax Lab</span>
-      </a>
-
-      <nav class="nav" aria-label="Main navigation">
-        <a href="{{ '/' | relative_url }}">Home</a>
-        <a href="{{ '/daily-log.html' | relative_url }}">Daily Log</a>
-        <a href="{{ '/research.html' | relative_url }}">Research Notes</a>
-        <a href="{{ '/projects.html' | relative_url }}">Projects</a>
-        <a href="{{ '/about.html' | relative_url }}">About</a>
+  <header>
+    <div class="header-inner">
+      <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
+      <nav>
+        <ul>
+          <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
+          <li><a href="{{ '/daily-log.html' | relative_url }}" {% if page.url contains 'daily-log' %}class="active"{% endif %}>Daily Log</a></li>
+          <li><a href="{{ '/research.html' | relative_url }}" {% if page.url contains 'research' %}class="active"{% endif %}>Research</a></li>
+          <li><a href="{{ '/projects.html' | relative_url }}" {% if page.url contains 'projects' %}class="active"{% endif %}>Projects</a></li>
+          <li><a href="{{ '/about.html' | relative_url }}" {% if page.url contains 'about' %}class="active"{% endif %}>About</a></li>
+        </ul>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <main>
+  <main>
+    <div class="container">
       {{ content }}
-    </main>
+    </div>
+  </main>
 
-    <footer class="site-footer">
-      <div>
-        <strong>Nax Lab</strong>
-        <p>A living research log on human-led intelligent robotics, AI, vision, and embodied systems.</p>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/naxgotomakeit" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href="mailto:{{ site.email }}">Email</a>
-      </div>
-    </footer>
-  </div>
+  <footer>
+    <div class="footer-content">
+      <p>© {{ 'now' | date: "%Y" }} {{ site.author }}. Built with Jekyll.</p>
+      <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+    </div>
+  </footer>
 </body>
 </html>
