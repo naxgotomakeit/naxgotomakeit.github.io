@@ -437,7 +437,6 @@ AI 思维助手 - 浮动聊天组件
       });
 
       // 调用你的Cloudflare Worker后端（保护API key）
-      // 🔧 把下面的URL替换成你自己的Worker URL！
       const WORKER_URL = 'https://ai-assistant-proxy.nanxixi888.workers.dev';
       
       const response = await fetch(WORKER_URL, {
@@ -454,6 +453,25 @@ AI 思维助手 - 浮动聊天组件
       });
 
       const data = await response.json();
+      
+      // 检查是否有错误
+      if (data.error) {
+        removeLoadingMessage(loadingId);
+        addMessage('system', '错误：' + (data.error.message || data.error));
+        console.error('API Error:', data);
+        sendBtn.disabled = false;
+        return;
+      }
+
+      // 检查响应格式
+      if (!data.content || !Array.isArray(data.content)) {
+        removeLoadingMessage(loadingId);
+        addMessage('system', '响应格式错误。可能是API key配置有问题。');
+        console.error('Invalid response:', data);
+        sendBtn.disabled = false;
+        return;
+      }
+
       const aiResponse = data.content
         .filter(item => item.type === 'text')
         .map(item => item.text)
