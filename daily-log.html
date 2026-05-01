@@ -7,16 +7,15 @@ title: Daily Log
   <p class="eyebrow">Living Research Log</p>
   <h1>Daily Log</h1>
   <p>
-    This page records small daily progress, not perfect achievements.
+    This page records all daily progress, experiments, paper notes, and reflections.
     The goal is consistency, reflection, and building visible research evidence over time.
   </p>
 </section>
 
 <section class="timeline">
-  {% assign daily_posts = site.posts | where_exp: "post", "post.categories contains 'daily-log'" %}
   {% assign current_day = "" %}
 
-  {% for post in daily_posts %}
+  {% for post in site.posts %}
     {% assign post_day = post.date | date: "%B %-d, %Y" %}
     {% if post_day != current_day %}
       {% assign current_day = post_day %}
@@ -25,7 +24,7 @@ title: Daily Log
     {% include log-card.html post=post %}
   {% endfor %}
 
-  {% if daily_posts.size == 0 %}
-    <p class="empty-state">No daily logs yet. Add a Markdown file under <code>_posts/</code> with category <code>daily-log</code>.</p>
+  {% if site.posts.size == 0 %}
+    <p class="empty-state">No logs yet. Add a Markdown file under <code>_posts/</code>.</p>
   {% endif %}
 </section>
