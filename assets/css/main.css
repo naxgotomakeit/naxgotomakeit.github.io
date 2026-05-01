@@ -298,10 +298,10 @@ main {
 
 /* Direction card */
 .direction-card {
-  background: var(--color-accent-light);
-  border: 1px solid var(--color-accent);
-  border-left-width: 4px;
-  border-radius: var(--radius-lg);
+  background: #FFEDD5;           /* 淡橙色背景 */
+  border: 1px solid #FB923C;     /* 深一点的橙色边框 */
+  border-left-width: 4px;        /* 左边框加粗（可选，不要就删掉这行）*/
+  border-radius: 0;              /* 直角！*/
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-2xl);
 }
