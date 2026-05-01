@@ -59,17 +59,16 @@ title: Home
 <section class="section-header">
   <div>
     <p class="eyebrow">Latest Updates</p>
-    <h2>Daily Log Feed</h2>
+    <h2>Recent Activity</h2>
   </div>
   <a class="text-link" href="{{ '/daily-log.html' | relative_url }}">View all logs →</a>
 </section>
 
 <section class="timeline">
-  {% assign daily_posts = site.posts | where_exp: "post", "post.categories contains 'daily-log'" %}
-  {% assign recent_daily = daily_posts | slice: 0, 10 %}
+  {% assign recent_posts = site.posts | slice: 0, 10 %}
   {% assign current_day = "" %}
 
-  {% for post in recent_daily %}
+  {% for post in recent_posts %}
     {% assign post_day = post.date | date: "%B %-d, %Y" %}
     {% if post_day != current_day %}
       {% assign current_day = post_day %}
@@ -78,8 +77,8 @@ title: Home
     {% include log-card.html post=post %}
   {% endfor %}
 
-  {% if recent_daily.size == 0 %}
-    <p class="empty-state">No daily logs yet. Add a Markdown file under <code>_posts/</code> with category <code>daily-log</code>.</p>
+  {% if site.posts.size == 0 %}
+    <p class="empty-state">No posts yet. Add a Markdown file under <code>_posts/</code>.</p>
   {% endif %}
 </section>
 
