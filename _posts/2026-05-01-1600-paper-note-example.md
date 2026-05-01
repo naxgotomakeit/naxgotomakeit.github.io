@@ -2,8 +2,7 @@
 layout: post
 title: "Paper Note Template - Example"
 date: 2026-05-01 16:00:00 +0000
-categories: research-note
-tags: [Embodied AI, VLA, World Models]
+tags: [research,Embodied AI, VLA, World Models]
 ---
 
 ## Problem
