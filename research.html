@@ -13,7 +13,7 @@ title: Research Notes
 </section>
 
 <section class="note-list">
-  {% assign research_posts = site.posts | where_exp: "post", "post.categories contains 'research-note'" %}
+  {% assign research_posts = site.posts | where_exp: "post", "post.tags contains 'research'" %}
   {% for post in research_posts %}
     <article class="note-card wide">
       <p class="post-date">{{ post.date | date: "%B %-d, %Y · %H:%M" }}</p>
@@ -31,6 +31,6 @@ title: Research Notes
   {% endfor %}
 
   {% if research_posts.size == 0 %}
-    <p class="empty-state">No research notes yet. Add a Markdown file under <code>_posts/</code> with category <code>research-note</code>.</p>
+    <p class="empty-state">No research notes yet. Add posts with tag <code>research</code>.</p>
   {% endif %}
 </section>
