@@ -1,0 +1,544 @@
+<!-- 
+AI 思维助手 - 浮动聊天组件
+可以嵌入到任何页面，自动感知当前页面内容
+-->
+
+<div id="ai-assistant-floating">
+  <button id="ai-toggle-btn" aria-label="AI助手">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </button>
+
+  <div id="ai-chat-panel" class="ai-chat-hidden">
+    <div class="ai-chat-header">
+      <div>
+        <h3>AI 思维助手</h3>
+        <p class="ai-context-indicator">正在加载上下文...</p>
+      </div>
+      <button id="ai-close-btn" aria-label="关闭">×</button>
+    </div>
+
+    <div class="ai-chat-messages" id="ai-messages"></div>
+
+    <div class="ai-chat-input-area">
+      <textarea 
+        id="ai-input" 
+        placeholder="说说你的想法...（试试说：总结一下我们的讨论）"
+        rows="3"
+      ></textarea>
+      <button id="ai-send-btn">发送</button>
+    </div>
+  </div>
+</div>
+
+<style>
+#ai-assistant-floating {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+#ai-toggle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #1A1A1A;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#ai-toggle-btn:hover {
+  background: #2A2A2A;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+#ai-chat-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 420px;
+  height: 600px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+#ai-chat-panel.ai-chat-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.95);
+}
+
+.ai-chat-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  background: #F5F5F0;
+  border-radius: 16px 16px 0 0;
+}
+
+.ai-chat-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.ai-context-indicator {
+  margin: 4px 0 0 0;
+  font-size: 0.75rem;
+  color: #6B7280;
+}
+
+#ai-close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+#ai-close-btn:hover {
+  background: rgba(0,0,0,0.05);
+  color: #1A1A1A;
+}
+
+.ai-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-message {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  animation: messageSlideIn 0.3s ease;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-message.user {
+  align-self: flex-end;
+  background: #1A1A1A;
+  color: white;
+}
+
+.ai-message.assistant {
+  align-self: flex-start;
+  background: #F3F4F6;
+  color: #1A1A1A;
+}
+
+.ai-message.system {
+  align-self: center;
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 0.875rem;
+  max-width: 100%;
+  text-align: center;
+}
+
+.ai-message.summary {
+  align-self: stretch;
+  background: #ECFDF5;
+  border: 1px solid #10B981;
+  border-left-width: 4px;
+  max-width: 100%;
+}
+
+.ai-summary-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #065F46;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ai-copy-summary-btn {
+  background: #10B981;
+  color: white;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ai-copy-summary-btn:hover {
+  background: #059669;
+}
+
+.ai-summary-content {
+  white-space: pre-wrap;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #065F46;
+}
+
+.ai-chat-input-area {
+  padding: 16px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  gap: 12px;
+  background: white;
+  border-radius: 0 0 16px 16px;
+}
+
+#ai-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  resize: none;
+  transition: border-color 0.2s;
+}
+
+#ai-input:focus {
+  outline: none;
+  border-color: #1A1A1A;
+}
+
+#ai-send-btn {
+  padding: 12px 24px;
+  background: #1A1A1A;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-end;
+}
+
+#ai-send-btn:hover:not(:disabled) {
+  background: #2A2A2A;
+}
+
+#ai-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-loading {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+}
+
+.ai-loading-dot {
+  width: 8px;
+  height: 8px;
+  background: #9CA3AF;
+  border-radius: 50%;
+  animation: loadingBounce 1.4s infinite ease-in-out both;
+}
+
+.ai-loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.ai-loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loadingBounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  #ai-chat-panel {
+    width: calc(100vw - 32px);
+    right: 16px;
+    bottom: 90px;
+    height: 70vh;
+  }
+
+  #ai-toggle-btn {
+    width: 56px;
+    height: 56px;
+    bottom: 20px;
+    right: 16px;
+  }
+}
+</style>
+
+<script>
+(function() {
+  const toggleBtn = document.getElementById('ai-toggle-btn');
+  const chatPanel = document.getElementById('ai-chat-panel');
+  const closeBtn = document.getElementById('ai-close-btn');
+  const messagesContainer = document.getElementById('ai-messages');
+  const inputField = document.getElementById('ai-input');
+  const sendBtn = document.getElementById('ai-send-btn');
+  const contextIndicator = document.querySelector('.ai-context-indicator');
+
+  let conversationHistory = [];
+  let currentPageContext = null;
+  let recentPosts = [];
+
+  // Toggle chat panel
+  toggleBtn.addEventListener('click', () => {
+    chatPanel.classList.toggle('ai-chat-hidden');
+    if (!chatPanel.classList.contains('ai-chat-hidden')) {
+      inputField.focus();
+      if (conversationHistory.length === 0) {
+        loadPageContext();
+      }
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    chatPanel.classList.add('ai-chat-hidden');
+  });
+
+  // Load page context
+  async function loadPageContext() {
+    contextIndicator.textContent = '正在加载上下文...';
+    
+    try {
+      // 检测当前页面
+      const currentUrl = window.location.pathname;
+      const isPostPage = currentUrl.includes('/20'); // 日志详情页通常包含日期
+      
+      if (isPostPage) {
+        // 获取当前页面内容
+        const postTitle = document.querySelector('h1')?.textContent || '';
+        const postDate = document.querySelector('.post-date, .eyebrow')?.textContent || '';
+        const postContent = document.querySelector('.post-content, article')?.textContent || '';
+        
+        currentPageContext = {
+          title: postTitle,
+          date: postDate,
+          content: postContent.substring(0, 3000), // 限制长度
+          url: currentUrl
+        };
+        
+        contextIndicator.textContent = `当前：${postTitle.substring(0, 30)}...`;
+      } else {
+        contextIndicator.textContent = '首页模式';
+      }
+
+      // TODO: 这里可以加载最近的日志
+      // 由于是静态网站，需要预先生成一个JSON文件包含所有日志摘要
+      // 或者通过GitHub API读取
+      
+      // 添加欢迎消息
+      addMessage('assistant', currentPageContext 
+        ? `我看到你在阅读「${currentPageContext.title}」，有什么想讨论的吗？` 
+        : '你好！我是你的AI思维助手。有什么想法要讨论吗？'
+      );
+      
+    } catch (error) {
+      console.error('加载上下文失败:', error);
+      contextIndicator.textContent = '上下文加载失败';
+    }
+  }
+
+  // Send message
+  async function sendMessage() {
+    const userInput = inputField.value.trim();
+    if (!userInput) return;
+
+    // 添加用户消息
+    addMessage('user', userInput);
+    inputField.value = '';
+    sendBtn.disabled = true;
+
+    // 检测是否是总结触发词
+    const summaryTriggers = ['总结', '总结一下', '结论很好', '这个结论很好', '我们的讨论', '归纳'];
+    const isSummaryRequest = summaryTriggers.some(trigger => userInput.includes(trigger));
+
+    // 显示加载动画
+    const loadingId = Date.now();
+    addLoadingMessage(loadingId);
+
+    try {
+      // 构建上下文
+      let systemContext = '';
+      if (currentPageContext) {
+        systemContext = `
+当前用户正在阅读的日志：
+标题：${currentPageContext.title}
+日期：${currentPageContext.date}
+内容摘录：${currentPageContext.content.substring(0, 1000)}
+`;
+      }
+
+      // 构建消息历史
+      const messages = conversationHistory.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
+
+      messages.push({
+        role: 'user',
+        content: isSummaryRequest 
+          ? `请总结我们刚才的讨论。要求：
+1. 用markdown格式
+2. 如果讨论涉及到用户正在阅读的日志，要引用它
+3. 格式：
+> **AI探索记录 (${new Date().toISOString().split('T')[0]})**
+> 
+> [总结内容]
+4. 保持简洁，适合作为日志的补充内容`
+          : userInput
+      });
+
+      // 调用你的Cloudflare Worker后端（保护API key）
+      // 🔧 把下面的URL替换成你自己的Worker URL！
+      const WORKER_URL = 'https://ai-assistant-proxy.YOUR_USERNAME.workers.dev';
+      
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          system: systemContext ? `你是一个AI研究助手，帮助用户思考和探索想法。${systemContext}` : '你是一个AI研究助手，帮助用户思考和探索想法。',
+          messages: messages,
+        }),
+      });
+
+      const data = await response.json();
+      const aiResponse = data.content
+        .filter(item => item.type === 'text')
+        .map(item => item.text)
+        .join('\n');
+
+      // 移除加载动画
+      removeLoadingMessage(loadingId);
+
+      // 添加AI回复
+      if (isSummaryRequest) {
+        addSummaryMessage(aiResponse);
+      } else {
+        addMessage('assistant', aiResponse);
+      }
+
+      // 保存到历史
+      conversationHistory.push(
+        { role: 'user', content: userInput },
+        { role: 'assistant', content: aiResponse }
+      );
+
+    } catch (error) {
+      removeLoadingMessage(loadingId);
+      addMessage('system', '抱歉，出现错误：' + error.message);
+    } finally {
+      sendBtn.disabled = false;
+      inputField.focus();
+    }
+  }
+
+  // Add message to chat
+  function addMessage(role, content) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `ai-message ${role}`;
+    messageDiv.textContent = content;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  // Add summary message with copy button
+  function addSummaryMessage(content) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message summary';
+    messageDiv.innerHTML = `
+      <div class="ai-summary-header">
+        <span>📝 讨论总结</span>
+        <button class="ai-copy-summary-btn" onclick="navigator.clipboard.writeText(\`${content.replace(/`/g, '\\`')}\`).then(() => alert('已复制到剪贴板！'))">复制</button>
+      </div>
+      <div class="ai-summary-content">${content}</div>
+    `;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  // Add loading message
+  function addLoadingMessage(id) {
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'ai-message assistant';
+    loadingDiv.id = `loading-${id}`;
+    loadingDiv.innerHTML = `
+      <div class="ai-loading">
+        <div class="ai-loading-dot"></div>
+        <div class="ai-loading-dot"></div>
+        <div class="ai-loading-dot"></div>
+      </div>
+    `;
+    messagesContainer.appendChild(loadingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  // Remove loading message
+  function removeLoadingMessage(id) {
+    const loadingDiv = document.getElementById(`loading-${id}`);
+    if (loadingDiv) {
+      loadingDiv.remove();
+    }
+  }
+
+  // Event listeners
+  sendBtn.addEventListener('click', sendMessage);
+  inputField.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+})();
+</script>
