@@ -13,7 +13,9 @@ title: Projects
 </section>
 
 <section class="note-list">
-  {% assign project_posts = site.posts | where_exp: "post", "post.tags contains 'project' or post.tags contains 'projects'" %}
+  {% assign project_posts = site.posts | where_exp: "post", "post.tags contains 'project'" %}
+  {% assign projects_posts = site.posts | where_exp: "post", "post.tags contains 'projects'" %}
+  {% assign project_posts = project_posts | concat: projects_posts | uniq %}
   {% for post in project_posts %}
     <article class="note-card wide">
       <p class="post-date">{{ post.date | date: "%B %-d, %Y · %H:%M" }}</p>

@@ -1,0 +1,26 @@
+Filename: YYYY-MM-DD-HHMM-short-title.md
+Title: [Log title]
+
+---
+layout: post
+title: "[Log title]"
+date: YYYY-MM-DD HH:MM:00 +0000
+categories: daily-log
+tags: [tag1, tag2]
+---
+
+## What I did
+
+[Briefly describe what you worked on.]
+
+## What I learned
+
+[Write one or two things you learned.]
+
+## Problems / Questions
+
+[List blockers, bugs, uncertainties, or questions.]
+
+## Next step
+
+[Write the next concrete action.]
