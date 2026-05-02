@@ -36,6 +36,8 @@ Write your log here.
 
 The Home page and Daily Log page will automatically group entries by date.
 
+To show a post on the Projects page, add either `project` or `projects` to its `tags`.
+
 ### Add a research note
 
 Create a new Markdown file in `_posts/` with `categories: research-note`.
@@ -60,9 +62,9 @@ tags: [Embodied AI, VLA, World Models]
 ## My takeaway
 ```
 
-### Edit projects
+### Add a project post
 
-Edit `projects.html` directly to update project cards.
+Create a Markdown file in `_posts/` and add `project` or `projects` to its `tags`.
 
 # 如何上传/添加日志到你的网站
 
