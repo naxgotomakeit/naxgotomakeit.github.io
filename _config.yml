@@ -7,7 +7,7 @@ url: "https://naxgotomakeit.github.io"
 timezone: Europe/London
 
 markdown: kramdown
-permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 
 plugins:
   - jekyll-feed
