@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "设计系统探索：从Claude.ai到个人网站"
-date: 2026-05-02 21:00
+date: 2026-05-02 21:00:00 +0000
+categories: daily-log
 tags: [interests, design, web-dev]
 ---
 
