@@ -1,20 +1,17 @@
-title: Nax Lab
-description: A living personal research log for human-led intelligent robotics, embodied AI, and efficient multimodal systems.
-author: Xi Nan
-email: x.nan.25@ucl.ac.uk
+title: "Nax — Personal Lab"
+description: "AI systems, research engineering, independent projects, and ideas beyond."
+author: "Xi Nan"
+email: "x.nan.25@ucl.ac.uk"
 baseurl: ""
 url: "https://naxgotomakeit.github.io"
-timezone: Europe/London
-
+timezone: "Europe/London"
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
-
 plugins:
   - jekyll-feed
-
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: post
+exclude:
+  - _posts
+  - README.md
+  - CLAUDE_DESIGN_README.md
+  - DESIGN_NOTES.md
+  - daily-log-template.txt
