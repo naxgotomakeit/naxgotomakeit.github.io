@@ -1,38 +1,11 @@
 ---
 layout: default
-title: Projects
+title: Work
+section: work
+permalink: /work/
 ---
-
-<section class="page-hero compact">
-  <p class="eyebrow">Structured Project Evidence</p>
-  <h1>Projects</h1>
-  <p>
-    Project posts, build notes, coursework evidence, demos, and future project directions.
-    Add the <code>project</code> or <code>projects</code> tag to a post to show it here.
-  </p>
-</section>
-
-<section class="note-list">
-  {% assign project_posts = site.posts | where_exp: "post", "post.tags contains 'project'" %}
-  {% assign projects_posts = site.posts | where_exp: "post", "post.tags contains 'projects'" %}
-  {% assign project_posts = project_posts | concat: projects_posts | uniq %}
-  {% for post in project_posts %}
-    <article class="note-card wide">
-      <p class="post-date">{{ post.date | date: "%B %-d, %Y · %H:%M" }}</p>
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      {% if post.tags %}
-        <div class="tag-row small-tags">
-          {% for tag in post.tags %}
-            <span class="tag">{{ tag }}</span>
-          {% endfor %}
-        </div>
-      {% endif %}
-      <p>{{ post.excerpt | strip_html | truncate: 220 }}</p>
-      <a class="read-more" href="{{ post.url | relative_url }}">Read project →</a>
-    </article>
-  {% endfor %}
-
-  {% if project_posts.size == 0 %}
-    <p class="empty-state">No project posts yet. Add posts with tag <code>project</code> or <code>projects</code>.</p>
-  {% endif %}
-</section>
+<section class="page wrap"><p class="kicker">WORK / SELECTED PROJECTS</p><h1>Built from <em>questions.</em></h1><p class="lead">Selected AI systems and research projects. Public descriptions focus on purpose, contribution and demonstrable outcomes; confidential implementation details stay private.</p></section>
+<section class="section"><div class="wrap cards">
+<a class="project-card featured" href="{{ '/work/g-cube/' | relative_url }}"><div class="visual gcube"><div class="nodes"><b>Evidence</b><b>G-CUBE</b><b>Decisions</b></div></div><div class="card-copy"><span class="label">01 / FEATURED</span><h3>G-CUBE</h3><p>Structured AI decision workflows, developed with Rose's team.</p><div class="card-foot"><span>AI systems development</span><span>View ↗</span></div></div></a>
+<a class="project-card" href="{{ '/work/interspace/' | relative_url }}"><div class="visual interspace"><span class="planet"></span></div><div class="card-copy"><span class="label">02 / INDEPENDENT TEAM</span><h3>Interspace / 间隙</h3><p>Character intelligence, memory and interaction.</p><div class="card-foot"><span>Collaborative project</span><span>View ↗</span></div></div></a>
+<a class="project-card" href="{{ '/work/video-qa/' | relative_url }}"><div class="visual video"><span class="film"><i></i><i></i><i></i></span></div><div class="card-copy"><span class="label">03 / RESEARCH</span><h3>Efficient Video QA</h3><p>Practical efficiency and evidence selection for long-video QA.</p><div class="card-foot"><span>UCL MSc research</span><span>View ↗</span></div></div></a></div></section>
