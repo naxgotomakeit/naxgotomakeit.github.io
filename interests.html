@@ -1,36 +1,14 @@
 ---
 layout: default
-title: Interests
+title: Beyond Work
+section: beyond
+permalink: /beyond/
 ---
-
-<section class="page-hero compact">
-  <p class="eyebrow">Beyond Research · Personal Exploration</p>
-  <h1>Interests</h1>
-  <p>
-    Things I find interesting beyond core research: side projects, explorations, 
-    technology trends, design thinking, and topics that might connect to future work.
-  </p>
-</section>
-
-<section class="note-list">
-  {% assign interests_posts = site.posts | where_exp: "post", "post.tags contains 'interests'" %}
-  {% for post in interests_posts %}
-    <article class="note-card wide">
-      <p class="post-date">{{ post.date | date: "%B %-d, %Y · %H:%M" }}</p>
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      {% if post.tags %}
-        <div class="tag-row small-tags">
-          {% for tag in post.tags %}
-            <span class="tag">{{ tag }}</span>
-          {% endfor %}
-        </div>
-      {% endif %}
-      <p>{{ post.excerpt | strip_html | truncate: 220 }}</p>
-      <a class="read-more" href="{{ post.url | relative_url }}">Read more →</a>
-    </article>
-  {% endfor %}
-
-  {% if interests_posts.size == 0 %}
-    <p class="empty-state">No interests posts yet. Add posts with tag <code>interests</code>.</p>
-  {% endif %}
-</section>
+<section class="page wrap"><p class="kicker">BEYOND / LIFE & IDEAS</p><h1>More than <em>a title.</em></h1><p class="lead">My interests extend beyond technology: music, cooking, business, philosophy and how people make sense of the world.</p></section>
+<section class="section"><div class="wrap beyond-grid">
+<article class="beyond-card"><span class="small">VENTURES / EXPLORATION</span><h3>Business & International Trade</h3><p>Involved in family-connected industrial manufacturing and exploring overseas B2B opportunities. No claim of completed export transactions.</p></article>
+<article class="beyond-card"><span class="small">PERSONAL PHOTO TO COME</span><h3>Piano & Music</h3><p>Playing music and exploring ideas beyond a screen. Personal photographs will be added here.</p></article>
+<article class="beyond-card"><span class="small">PERSONAL PHOTO TO COME</span><h3>Cooking</h3><p>Cooking is another way to create, experiment and learn. A photo gallery may follow.</p></article>
+<article class="beyond-card"><span class="small">READING & REFLECTION</span><h3>Ideas & Philosophy</h3><p>Recent reading on Einstein's worldview and scientific philosophy. Personal reflections, not claims of original physics research.</p></article>
+</div></section>
+<section class="detail"><div class="wrap two-col"><div><p class="kicker">VENTURES</p><h2>Industry meets <em>curiosity.</em></h2></div><div class="text-block"><p>I'm learning the realities of manufacturing partnerships, B2B trade, market research and international customer development. Supplier arrangements and contracts remain private.</p></div></div></section>
