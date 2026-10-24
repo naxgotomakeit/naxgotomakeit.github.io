@@ -196,4 +196,21 @@ figcaption a { color: var(--accent); text-decoration: underline; text-underline-
   .finding > h3 { font-size: 20px; }
 }
 
+.research-story .story-bridge { margin-top: 28px; }
+.research-story .research-question { margin-top: 28px; padding: 4px 0 4px 20px; border-left: 2px solid var(--accent); color: var(--ink); font-size: 21px; line-height: 1.65; }
+.research-question .small { display: block; margin-bottom: 8px; }
+.research-evidence { margin-top: 26px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 17px 0; }
+.research-evidence > summary { cursor: pointer; color: var(--accent); font-size: 17px; font-weight: 500; line-height: 1.6; }
+.research-evidence > summary .small { display: block; margin: 4px 0 0 19px; font-weight: 400; }
+.research-evidence > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.research-evidence[open] { padding-bottom: 22px; }
+.research-evidence .research-figure { margin-top: 24px; }
+.research-story .text-block strong { color: var(--ink); font-weight: 500; }
+.story-result { margin-top: 28px; }
+
+@media (max-width: 700px) {
+  .research-story .research-question { font-size: 19px; padding-left: 16px; }
+  .research-evidence > summary { font-size: 16px; }
+}
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
