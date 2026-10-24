@@ -1,21 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ page.lang | default: 'en' }}">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{{ page.description | default: site.description | escape }}">
 <meta name="theme-color" content="#f6f5ef">
-<title>{% if page.title and page.title != 'Home' %}{{ page.title }} · {% endif %}Nax — Personal Lab</title>
+<title>{% if page.title and page.title != 'Home' and page.title != '首页' %}{{ page.title }} · {% endif %}Nax — {% if page.lang == 'zh-CN' %}个人实验室{% else %}Personal Lab{% endif %}</title>
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+<link rel="canonical" href="{{ page.permalink | default: page.url | absolute_url }}">
+<link rel="alternate" hreflang="en" href="{{ page.english_url | absolute_url }}">
+<link rel="alternate" hreflang="zh-CN" href="{{ page.chinese_url | absolute_url }}">
+<script src="{{ '/assets/js/language.js' | relative_url }}" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">{% if page.lang == 'zh-CN' %}跳至正文{% else %}Skip to content{% endif %}</a>
 <header class="site-header"><div class="wrap header-inner">
-<a class="logo" href="{{ '/' | relative_url }}"><span class="dot"></span>NAX<span class="muted">/LAB</span></a>
-<nav aria-label="Main navigation">
-<a href="{{ '/work/' | relative_url }}" {% if page.section == 'work' %}aria-current="page"{% endif %}>Work</a>
-<a href="{{ '/about/' | relative_url }}" {% if page.section == 'about' %}aria-current="page"{% endif %}>About</a>
-<a href="{{ '/beyond/' | relative_url }}" {% if page.section == 'beyond' %}aria-current="page"{% endif %}>Beyond</a>
-<a href="{{ '/' | relative_url }}#contact">Contact ↗</a></nav></div></header>
+<a class="logo" href="{{ site.baseurl }}{{ page.locale_prefix | default: '' }}/"><span class="dot"></span>NAX<span class="muted">/LAB</span></a>
+<nav class="main-nav" aria-label="{% if page.lang == 'zh-CN' %}主导航{% else %}Main navigation{% endif %}">
+<a href="{{ site.baseurl }}{{ page.locale_prefix | default: '' }}/work/" {% if page.section == 'work' %}aria-current="page"{% endif %}>{% if page.lang == 'zh-CN' %}项目{% else %}Work{% endif %}</a>
+<a href="{{ site.baseurl }}{{ page.locale_prefix | default: '' }}/about/" {% if page.section == 'about' %}aria-current="page"{% endif %}>{% if page.lang == 'zh-CN' %}关于我{% else %}About{% endif %}</a>
+<a href="{{ site.baseurl }}{{ page.locale_prefix | default: '' }}/beyond/" {% if page.section == 'beyond' %}aria-current="page"{% endif %}>{% if page.lang == 'zh-CN' %}生活与探索{% else %}Beyond{% endif %}</a>
+<a href="{{ site.baseurl }}{{ page.locale_prefix | default: '' }}/#contact">{% if page.lang == 'zh-CN' %}联系{% else %}Contact{% endif %} ↗</a>
+</nav>
+<nav class="language-switcher" aria-label="{% if page.lang == 'zh-CN' %}选择语言{% else %}Choose language{% endif %}">
+<a href="{{ page.chinese_url | relative_url }}" lang="zh-CN" hreflang="zh-CN" data-language-link {% if page.lang == 'zh-CN' %}aria-current="true"{% endif %}>中文</a>
+<a href="{{ page.english_url | relative_url }}" lang="en" hreflang="en" data-language-link {% if page.lang != 'zh-CN' %}aria-current="true"{% endif %}>EN</a>
+</nav>
+</div></header>
 <main id="main">{{ content }}</main>
-<footer id="contact" class="footer"><div class="wrap footer-grid"><div><h2>Contact</h2><p>For questions, projects or collaborations, feel free to get in touch.</p><a class="text-link" href="mailto:{{ site.email }}">Email me ↗</a></div><div class="footer-links"><a href="https://github.com/naxgotomakeit" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>CV available on request</span></div></div><div class="wrap footer-end"><span>© {{ 'now' | date: '%Y' }} Nax</span><span>London, UK</span></div></footer>
+<footer id="contact" class="footer"><div class="wrap footer-grid"><div><h2>{% if page.lang == 'zh-CN' %}联系我{% else %}Contact{% endif %}</h2><p>{% if page.lang == 'zh-CN' %}如果你想讨论问题、项目或合作，欢迎联系我。{% else %}For questions, projects or collaborations, feel free to get in touch.{% endif %}</p><a class="text-link" href="mailto:{{ site.email }}">{% if page.lang == 'zh-CN' %}给我发邮件{% else %}Email me{% endif %} ↗</a></div><div class="footer-links"><a href="https://github.com/naxgotomakeit" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>{% if page.lang == 'zh-CN' %}简历可联系索取{% else %}CV available on request{% endif %}</span></div></div><div class="wrap footer-end"><span>© {{ 'now' | date: '%Y' }} Nax</span><span>{% if page.lang == 'zh-CN' %}英国，伦敦{% else %}London, UK{% endif %}</span></div></footer>
 </body></html>

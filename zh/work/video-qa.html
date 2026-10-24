@@ -1,0 +1,185 @@
+---
+layout: default
+lang: zh-CN
+title: 高效长视频问答
+section: work
+permalink: /zh/work/video-qa/
+alternate_url: /work/video-qa/
+description: 我如何将长视频问答这一宽泛目标，转化为可复用的证据索引，检验其成本，并评估更简洁的智能体工作流。
+english_url: /work/video-qa/
+chinese_url: /zh/work/video-qa/
+locale_prefix: /zh
+---
+<section class="page wrap">
+  <p class="kicker">硕士研究 · UCL · 2026 年 6–9 月</p>
+  <h1>在长视频中找到关键时刻</h1>
+  <p class="lead">我的研究始于一个宽泛的目标：让长视频问答更高效。我选择重新组织智能体使用的证据，再通过实验检验工作流中的哪些环节仍值得投入成本。</p>
+  <p class="sublead">让第一视角视频问答更高效 · 导师：Gabriel Brostow 教授 · 产业合作方：InferityAI</p>
+  <div class="actions">
+    <a class="text-link" href="{{ '/zh/work/' | relative_url }}">← 全部作品</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence" target="_blank" rel="noopener noreferrer">代码与实验 ↗</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/demo/README.md" target="_blank" rel="noopener noreferrer">演示运行说明 ↗</a>
+  </div>
+  <nav class="page-index" aria-label="本项目页面导航">
+    <a href="#question">研究起点</a><a href="#system">系统设计</a><a href="#findings">实验发现</a><a href="#takeaways">研究收获</a>
+  </nav>
+</section>
+
+<section class="detail research-story" id="question"><div class="wrap">
+  <p class="kicker">研究起点</p>
+  <h2>一个小问题，可能需要漫长的搜索</h2>
+  <div class="text-block section-copy">
+    <p>有用的线索可能只出现一瞬间，而理解它却要联系更早或更晚发生的事件。只抽取少量视频帧，可能错过线索；输入更多帧，又会增加处理量和上下文需求。</p>
+    <p>面对开放的研究目标，我选择聚焦这一信息瓶颈：系统如何定位证据，并保留足够的上下文来理解它。这也关联到更广泛的智能体设计问题。规划、检索和复核都会消耗资源，而这些环节的价值，部分取决于它们接收到的信息。</p>
+    <p class="research-question"><span class="small">我选择研究的问题</span>能否在问题到来之前先组织好视频，从而减少回答每个问题所需的工作？</p>
+  </div>
+</div></section>
+
+<section class="detail research-story" id="system"><div class="wrap">
+  <p class="kicker">设计选择</p>
+  <h2>从事件出发，循线找到细节</h2>
+  <div class="text-block section-copy">
+    <p>我借用了回忆中的一个简单直觉：先想起大致发生的事件，再沿着它找到具体细节。据此，我构建了一个无需训练的层次结构，包含事件摘要、更短时段的描述，以及指向原始视频帧的链接。</p>
+    <p>索引只需构建一次，就能供多个问题复用。回答时，智能体可以先通过概览定位相关内容，再查看底层视频帧。这样既将部分工作移至离线阶段，也保留了查阅摘要可能遗漏的细节的能力。</p>
+  </div>
+  <figure class="research-figure">
+    <a class="figure-image" href="{{ '/assets/images/thesis/system-overview.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="查看系统概览原图">
+      <img src="{{ '/assets/images/thesis/system-overview.webp' | relative_url }}" width="1801" height="1070" alt="离线阶段通过视频帧采样、图像描述生成和语义分组构建层次化事件图谱。在线的 Staged 工作流依次进行规划、检查图谱证据、检索并查看视频帧，最后作答。" decoding="async">
+    </a>
+    <figcaption><span class="figure-source">图 3.1 · 学位论文第 6 页</span>基于图像描述的索引与 Staged 证据循环。Direct 直接作答和改编后的 VideoSEAL 工作流属于另外的执行配置。<a href="{{ '/assets/images/thesis/system-overview.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">查看原图 ↗</a></figcaption>
+  </figure>
+  <div class="text-block story-bridge"><p>事件图谱只是一个设计假设。要判断它是否有效，我需要衡量整个回答过程中寻找和使用证据所需的工作。</p></div>
+  <details class="research-evidence" id="evaluation">
+    <summary>我如何检验这个想法 <span class="small">采样、配对比较与输入消融实验</span></summary>
+    <div class="text-block section-copy">
+      <p>主要评估使用了 HourVideo 中 12 段长视频的 300 道视觉五选一问题。在资源有限的情况下，我按原始问题类型的分布比例进行采样，随后比较答案正确率、完成情况和记录的在线资源消耗。</p>
+      <p>不同研究问题需要不同的控制条件：我分别比较了改编后 VideoSEAL 工作流中的检索设置、在相同问题上使用的索引表示，以及在索引和模型保持不变时的 Direct 与 Staged 执行方式。离线构建和在线作答分别核算。</p>
+    </div>
+    <figure class="research-figure figure-compact">
+    <a class="figure-image" href="{{ '/assets/images/thesis/question-distribution.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="查看问题类型分布图原图">
+      <img src="{{ '/assets/images/thesis/question-distribution.webp' | relative_url }}" width="1201" height="654" alt="原始问题集与评估样本的类型比例接近：推理约占 57%，感知约占 32%，总结约占 7%，导航约占 3%。" loading="lazy" decoding="async">
+    </a>
+    <figcaption><span class="figure-source">图 4.1 · 学位论文第 14 页</span>每个圆环分别代表其对应问题集的 100%。问题类型比例接近，并不能证明视觉内容或难度相同。<a href="{{ '/assets/images/thesis/question-distribution.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">查看原图 ↗</a></figcaption>
+  </figure>
+  </details>
+</div></section>
+
+<section class="detail research-story" id="findings"><div class="wrap">
+  <p class="kicker">实验发现</p>
+  <h2>更好的图谱，会改变工作量的分布</h2>
+  <div class="text-block section-copy">
+    <p>我改编了已有的视频问答系统 VideoSEAL，用于比较扁平检索和层次检索。其中一种层次检索设置，在观察到的准确率接近扁平检索的同时，减少了记录的处理开销。但在更大的检索预算下，这一优势消失了。因此，检索策略与作答工作流必须放在一起评估。</p>
+  </div>
+  <details class="research-evidence">
+    <summary>比较检索设置 <span class="small">全部五种配置 · 300 道问题</span></summary>
+    <p class="table-hint">横向滑动，查看表格的全部列 →</p>
+    <div class="table-scroll" role="region" aria-label="检索结果；小屏幕上可横向滚动" tabindex="0">
+      <table class="results-table">
+        <caption>改编后的 VideoSEAL · 300 道问题 · 表 5.3 的部分指标</caption>
+        <thead><tr><th scope="col">检索配置</th><th scope="col">正确率</th><th scope="col">完成数量</th><th scope="col">记录用时</th><th scope="col">图像发送次数</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Flat-30</th><td>27.33%</td><td>254 / 300</td><td>32.62 h</td><td>21,492</td></tr>
+          <tr><th scope="row">Flat-15</th><td>25.33%</td><td>260 / 300</td><td>28.89 h</td><td>19,328</td></tr>
+          <tr><th scope="row">Hierarchical-8</th><td>26.00%</td><td>270 / 300</td><td>26.19 h</td><td>18,180</td></tr>
+          <tr class="focus-row"><th scope="row">Hierarchical-15</th><td>27.00%</td><td>270 / 300</td><td>26.10 h</td><td>18,336</td></tr>
+          <tr><th scope="row">Hierarchical-30</th><td>26.00%</td><td>249 / 300</td><td>33.45 h</td><td>22,028</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="result-note">准确率以全部 300 道问题为分母，未完成的问题计为错误。用时为每道问题选定的一次最终尝试的记录时长之和，包含已记录的失败执行开销，不包含被后续尝试取代的执行记录和离线构建时间，因此不等于实际总耗时。这些比较同时改变了索引和检索流程；准确率接近，并不能证明两者在统计上等效。</p>
+  </details>
+
+  <div class="text-block story-bridge">
+    <p>索引比较还揭示了另一种权衡。更丰富的语义描述增加了规划器（Planner）需要处理的文本，却减少了规划之后的工作。在满足上下文容量限制的 150 道配对问题子集上，完整工作流的在线 token 用量下降了 <strong>27.2%</strong>，答对数量则从 51 道变为 52 道。</p>
+  </div>
+  <div class="result-pair story-result">
+    <figure class="research-figure figure-tokens">
+        <a class="figure-image" href="{{ '/assets/images/thesis/online-token-cost.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="查看在线 token 用量图原图">
+          <img src="{{ '/assets/images/thesis/online-token-cost.webp' | relative_url }}" width="1001" height="1389" alt="使用语义索引 R3 后，本地 paired150 上完整工作流的 token 用量从 2,285 万降至 1,662 万；在 Eval300 上使用 API 规划器时，从 4,271 万降至 3,668 万。两种情况下，规划器的 token 用量都增加了。" loading="lazy" decoding="async">
+        </a>
+        <figcaption><span class="figure-source">图 5.1 · 学位论文第 21 页</span>R1：目标检测与跟踪。R3：语义图像描述。应在各自的问题集内比较；图中数值分别四舍五入。<a href="{{ '/assets/images/thesis/online-token-cost.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">查看原图 ↗</a></figcaption>
+      </figure>
+    <div class="text-block">
+      <p><strong>收益来自工作量的重新分配。</strong>规划阶段增加的投入，换来了后续处理量的减少。</p>
+      <p><strong>更丰富的图谱也有局限。</strong>300 道问题中，有一半的语义索引输入超出了本地规划器的上下文容量。改用 API 规划器后，总 token 用量下降了，但规划器的 API 费用却上升了。</p>
+      <p>因此，我必须追踪整个流程：总 token 用量的节省，可能与某一个模型费用的上升同时发生。</p>
+    </div>
+  </div>
+  <p class="result-note">R1 使用目标检测与跟踪；R3 使用语义图像描述。本地比较仅涵盖两种输入都满足上下文容量限制的 150 道问题。其准确率差异不显著，也不能据此认定两者等效。在独立的 API 规划器实验中，R3 的规划器费用为 $10.10，R1 为 $4.97；本地 GPU 成本未折算为金额。</p>
+</div></section>
+
+<section class="detail research-story" id="workflow"><div class="wrap">
+  <p class="kicker">重新审视工作流</p>
+  <h2>有了图谱，还有多少阶段值得保留？</h2>
+  <div class="text-block section-copy">
+    <p>预先构建的索引，也让我能够重新检验执行结构。我比较了 Full Staged 工作流与 Direct 智能体；后者可以查阅图谱，并按需查看视频帧。</p>
+  </div>
+  <dl class="method-comparison">
+    <div><dt>Staged</dt><dd>将规划、证据调查、可选的视频帧复核和最终作答分为独立阶段。</dd></div>
+    <div><dt>Direct</dt><dd>由一个作答智能体使用图谱，并按需查看原始视频帧。</dd></div>
+  </dl>
+  <div class="text-block story-bridge">
+    <p>在相同的 100 道问题上，使用相同的语义索引和模型，Direct 的<strong>在线 API 支出降低了 70.3%</strong>。它答对了 32 道问题，Full Staged 答对了 24 道，不过准确率差异未达到统计显著水平。</p>
+    <p>在这一配置下，额外阶段未表现出足以支持其额外成本的准确率收益。这一结果支持在所测试的任务中采用更简洁的工作流。</p>
+  </div>
+  <details class="research-evidence">
+    <summary>查看工作流比较 <span class="small">质量、完成情况、模型尝试次数与成本</span></summary>
+    <div class="table-scroll" role="region" aria-label="Staged 与 Direct 的结果" tabindex="0">
+      <table class="results-table">
+        <caption>相同的 100 道问题 · R3 索引与 Haiku 模型 · 表 5.6</caption>
+        <thead><tr><th scope="col">指标</th><th scope="col">Full Staged</th><th scope="col">Direct</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">答对数量</th><td>24 / 100</td><td>32 / 100</td></tr>
+          <tr><th scope="row">完成数量</th><td>97 / 100</td><td>99 / 100</td></tr>
+          <tr class="focus-row"><th scope="row">每题 API 费用</th><td>$0.1449</td><td>$0.0430</td></tr>
+          <tr><th scope="row">每题模型尝试次数</th><td>7.62</td><td>4.87</td></tr>
+          <tr><th scope="row">每题不重复视频帧数</th><td>13.12</td><td>9.28</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="result-note">统计包含全部 100 道问题及失败执行的资源消耗。Staged 成本合并了估算的历史规划成本与实测的后续阶段成本；Direct 则涵盖其完整 API 执行路径。离线构建成本不计入。准确率差异的探索性精确 McNemar 检验：p = 0.169。这些结果仅描述所测试的配置，不能作为智能体架构的普遍排名。</p>
+  </details>
+</div></section>
+
+<section class="detail research-story" id="case-study"><div class="wrap">
+  <p class="kicker">检验证据究竟能支持什么</p>
+  <h2>图谱也影响答案能作出哪些判断</h2>
+  <div class="text-block section-copy">
+    <p>一项独立的视频与语音案例研究揭示了另一种局限。语音补充了协调行动和医疗处置的背景，改变了事件图谱，以及部分查看视频帧的选择。然而，语音中提到治疗，并不能证明画面中实际展示了治疗过程。</p>
+    <p>这影响了我对输出的解读：答案是否正确、获得了哪些背景信息，以及是否有直接的视觉证据支持，需要分别考察。</p>
+  </div>
+  <details class="research-evidence">
+    <summary>查看视频与语音案例 <span class="small">事件图谱与查看过的视频帧 · 图 5.2–5.3</span></summary>
+    <figure class="research-figure">
+    <a class="figure-image" href="{{ '/assets/images/thesis/speech-map-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="查看纯视觉与加入语音后的图谱对比原图">
+      <img src="{{ '/assets/images/thesis/speech-map-comparison.webp' | relative_url }}" width="1601" height="1338" alt="纯视觉索引将录像划分为六个区域；加入语音后形成十个区域，并补充了协调行动与医疗处置的背景。人工参考为示意性划分，未用于指导检索。" loading="lazy" decoding="async">
+    </a>
+    <figcaption><span class="figure-source">图 5.2 · 学位论文第 25 页</span>模型划分的边界使用同一条按时间比例绘制的轴。事后制作的人工参考仅作示意；区域更多，本身并不意味着分段更好。<a href="{{ '/assets/images/thesis/speech-map-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">查看原图 ↗</a></figcaption>
+  </figure>
+    <details class="evidence-details">
+      <summary>查看已检查的视频帧与答案 <span class="small">警务录像，含可见伤情</span></summary>
+      <figure class="research-figure">
+      <a class="figure-image" href="{{ '/assets/images/thesis/evidence-frame-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="查看已检查的视频帧与答案对比原图">
+        <img src="{{ '/assets/images/thesis/evidence-frame-comparison.webp' | relative_url }}" width="1801" height="2219" alt="三组纯视觉与语音增强的对比，分别涉及武器是否在场、可见伤情，以及难以判定的医疗协助。视频帧保留了查看时的时间戳；经恢复得到的医疗处置答案，其主要执行路径仍计为失败。" loading="lazy" decoding="async">
+      </a>
+      <figcaption><span class="figure-source">图 5.3 · 学位论文第 26 页</span>三个问题中实际查看的视频帧与精简后的答案。这是单段视频的案例展示，不是准确率的定量结果。经过格式恢复的回答，在主要评估中仍计为失败。<a href="{{ '/assets/images/thesis/evidence-frame-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">查看原图 ↗</a></figcaption>
+    </figure>
+    </details>
+  </details>
+</div></section>
+
+<section class="detail research-story" id="takeaways"><div class="wrap">
+  <p class="kicker">研究收获</p>
+  <h2>更好的信息，能让更简洁的智能体成为可行选择</h2>
+  <div class="text-block section-copy">
+    <p>索引的价值，取决于作答系统如何使用它。有些配置减少了在线工作量；另一些则遇到了上下文容量限制，或将成本转移到了其他阶段。在配对工作流比较中，更简洁的智能体是更经济的选择。</p>
+    <p>这项研究让我形成了一条设计原则：先判断哪些信息可以预先准备并复用，再检验每一个额外执行阶段带来的效果改善，是否足以支持其成本。</p>
+    <p>从一个宽泛的目标出发，我将研究问题落实为索引系统、不同的作答工作流和受控比较，由此形成了一种具体方法，用来考察证据组织方式与智能体复杂度之间的关系。</p>
+  </div>
+  <div class="actions">
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence" target="_blank" rel="noopener noreferrer">查看代码 ↗</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/demo/README.md" target="_blank" rel="noopener noreferrer">运行演示 ↗</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/THESIS_ARTIFACT_INDEX.md" target="_blank" rel="noopener noreferrer">结果与来源记录 ↗</a>
+  </div>
+  <p class="result-note">公开仓库保留了实现代码与实验记录。演示说明涵盖离线回放和新视频准备流程；新生成的输出与论文中记录的结果分开呈现。</p>
+</div></section>
