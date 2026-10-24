@@ -3,8 +3,79 @@ layout: default
 title: G Cube Glocal
 section: work
 permalink: /work/g-cube/
+description: "How I translate commercial research methods into technical requirements and a working Agent for G Cube Glocal. A public overview of my contribution, outputs and ongoing engineering work."
 ---
-<section class="page wrap"><p class="kicker">Paid company collaboration · Sep 2026–present</p><h1>G Cube Glocal</h1><p class="project-subtitle">Market research & decision Agent</p><p class="lead">An Agent for overseas-market research and business decisions, developed in collaboration with G Cube Glocal.</p><p class="lead">I independently select the technology, design the Agent and build the system, using business documents and financial models supplied by Rose's team.</p><div class="actions"><a class="button" href="{{ '/work/' | relative_url }}">← All work</a><a class="button" href="https://www.g3glocal.com/" target="_blank" rel="noopener noreferrer">Company website ↗</a><a class="button" href="mailto:{{ site.email }}?subject=G-CUBE%20demo%20enquiry">Discuss a walkthrough ↗</a></div></section>
+<section class="page wrap">
+  <p class="kicker">Paid company collaboration · Sep 2026–present</p>
+  <h1>From business documents to a research Agent</h1>
+  <p class="project-subtitle">G Cube Glocal · Overseas-market research & business analysis</p>
+  <p class="lead">G-CUBE began with business documents and financial models supplied by Rose's team. I turned that material into technical requirements, selected the technology and independently designed and implemented the Agent.</p>
+  <p class="sublead">Working demo · Reports and presentations · In development</p>
+  <div class="actions">
+    <a class="text-link" href="{{ '/work/' | relative_url }}">← All work</a>
+    <a class="text-link" href="https://www.g3glocal.com/" target="_blank" rel="noopener noreferrer">Company website ↗</a>
+    <a class="text-link" href="mailto:{{ site.email }}?subject=G-CUBE%20project%20enquiry">Discuss the project ↗</a>
+  </div>
+  <nav class="page-index" aria-label="On this project page">
+    <a href="#challenge">The starting point</a><a href="#contribution">My contribution</a><a href="#outputs">Demo outputs</a><a href="#progress">Current work</a>
+  </nav>
+</section>
 
-<section class="detail"><div class="wrap"><p class="kicker">THE PROJECT</p><h2>From business documents to <em>technical requirements.</em></h2><div class="info-grid"><div class="info"><span class="small">01 / CHALLENGE</span><h3>Finding the dependencies</h3><p>Identifying how questions, evidence and calculations depend on one another across business documents, then turning those relationships into implementable requirements.</p></div><div class="info"><span class="small">02 / APPROACH</span><h3>Designing the workflow</h3><p>Mapping those dependencies to LangGraph nodes, shared state and execution order. Deep Agents support research tools, with explicit inputs, evidence reuse and review conditions.</p></div><div class="info"><span class="small">03 / EVALUATION</span><h3>Comparing complete workflows</h3><p>Comparing the engineered Agent with the same workflow executed as a Skill, using a separate model to assess content coverage and analytical depth.</p></div></div></div></section>
-<section class="detail"><div class="wrap two-col"><div><p class="kicker">CURRENT STATUS</p><h2>Working demo.<br><em>Ongoing development.</em></h2></div><div class="text-block"><p>The demo connects research, evidence review and business analysis to reports and presentations.</p><p>Current work focuses on resource scheduling, review-and-revision loops and the stability of long-running workflows.</p><p>Commercial source materials and code remain private. A walkthrough can be discussed within the project's sharing boundaries.</p><p style="margin-top:18px"><a class="text-link" href="mailto:{{ site.email }}?subject=G-CUBE%20demo%20enquiry">Discuss a walkthrough ↗</a></p></div></div></section>
+<section class="detail research-story" id="challenge"><div class="wrap">
+  <p class="kicker">THE STARTING POINT</p>
+  <h2>A business method still needs a technical specification</h2>
+  <div class="text-block section-copy">
+    <p>The source documents described how the company wanted to research a market and reason about business decisions. Turning them into software required identifying the questions, evidence and calculations involved, and understanding how different parts of the analysis depended on one another.</p>
+    <p>I took responsibility for that translation. As I built the system, I refined a design approach for moving from abstract commercial material to implementable Agent requirements.</p>
+    <p class="research-question"><span class="small">The engineering question</span>What has to be made explicit before an Agent can carry out a business method reliably?</p>
+  </div>
+</div></section>
+
+<section class="detail" id="contribution"><div class="wrap">
+  <p class="kicker">MY CONTRIBUTION</p>
+  <h2>From interpreting the brief to building the system</h2>
+  <div class="info-grid">
+    <div class="info">
+      <span class="small">01 / REQUIREMENTS</span>
+      <h3>Make the relationships explicit</h3>
+      <p>I identified dependencies across the business documents and financial models, then used them to define technical requirements. This connected the company's domain knowledge to the system's intended behaviour.</p>
+    </div>
+    <div class="info">
+      <span class="small">02 / IMPLEMENTATION</span>
+      <h3>Own the technical choices</h3>
+      <p>I selected the technology, designed the Agent and implemented the working demo using LangGraph. The commercial methodology and source material come from Rose's team; the technical design and implementation are my responsibility.</p>
+    </div>
+    <div class="info">
+      <span class="small">03 / ITERATION</span>
+      <h3>Learn from complete runs</h3>
+      <p>I compare complete outputs and use model-assisted review to assess content coverage and analytical depth. The results inform further development, including where the system spends its effort and what prevents reliable completion.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="detail" id="outputs"><div class="wrap">
+  <p class="kicker">WHAT THE DEMO PRODUCES</p>
+  <h2>Research that can be read and discussed</h2>
+  <div class="text-block section-copy">
+    <p>The working demo connects market research and business analysis to written reports and presentations. These outputs make the result available for review beyond the Agent session itself.</p>
+  </div>
+  <dl class="method-comparison">
+    <div><dt>Report</dt><dd>Market research and business analysis brought together in a structured written deliverable.</dd></div>
+    <div><dt>Slides</dt><dd>Findings organized for discussion and review with the business team.</dd></div>
+  </dl>
+  <p class="result-note">Public overview of output formats. Commercial report content is not reproduced here.</p>
+</div></section>
+
+<section class="detail research-story" id="progress"><div class="wrap">
+  <p class="kicker">CURRENT ENGINEERING WORK</p>
+  <h2>Making a useful result more dependable</h2>
+  <div class="text-block section-copy">
+    <p>Evaluation so far has been encouraging on content coverage and analytical depth. Reliable completion remains an active engineering problem: producing a useful report and consistently finishing a long research task are separate things to test.</p>
+    <p>I am refining resource scheduling and the effort spent on review and revision, with the aim of making long-running jobs finish more reliably. The project remains in development.</p>
+  </div>
+  <p class="notice">Commercial source material, internal workflows, prompts and code remain private. Project discussions and any demonstration materials stay within the company's sharing boundaries.</p>
+  <div class="actions">
+    <a class="text-link" href="mailto:{{ site.email }}?subject=G-CUBE%20project%20enquiry">Discuss the project ↗</a>
+    <a class="text-link" href="https://www.g3glocal.com/" target="_blank" rel="noopener noreferrer">About G Cube Glocal ↗</a>
+  </div>
+</div></section>
