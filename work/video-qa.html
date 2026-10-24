@@ -3,8 +3,143 @@ layout: default
 title: Efficient Long-Video QA
 section: work
 permalink: /work/video-qa/
+description: "A reusable video index, five figures from my MSc dissertation, and experiments on evidence access, answer quality and online cost."
 ---
-<section class="page wrap"><p class="kicker">UCL MSc research · Jun–Sep 2026</p><h1>Efficient <em>Long-Video QA.</em></h1><p class="lead">My dissertation investigates how to organize long-video information and retrieve evidence on demand, and how those choices affect answer quality, online cost and the value of additional Agent orchestration.</p><p class="sublead">Making Egocentric VQA Efficient · Supervisor: Prof. Gabriel Brostow · Industry collaborator: InferityAI</p><div class="actions"><a class="button" href="{{ '/work/' | relative_url }}">← All work</a><a class="button" href="https://github.com/naxgotomakeit/thesis-av-evidence" target="_blank" rel="noopener noreferrer">Code & experiments ↗</a><a class="button" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/demo/README.md" target="_blank" rel="noopener noreferrer">Demo instructions ↗</a></div></section>
+<section class="page wrap">
+  <p class="kicker">UCL MSc research · Jun–Sep 2026</p>
+  <h1>Efficient long-video question answering</h1>
+  <p class="lead">How should an Agent find the few moments that matter in a long video? My dissertation studies how organizing evidence before a question arrives changes the work needed to answer it.</p>
+  <p class="sublead">Making Egocentric VQA Efficient · Supervisor: Prof. Gabriel Brostow · Industry collaborator: InferityAI</p>
+  <div class="actions">
+    <a class="text-link" href="{{ '/work/' | relative_url }}">← All work</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence" target="_blank" rel="noopener noreferrer">Code & experiments ↗</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/demo/README.md" target="_blank" rel="noopener noreferrer">Demo instructions ↗</a>
+  </div>
+  <nav class="page-index" aria-label="On this project page">
+    <a href="#system">System</a><a href="#evaluation">Evaluation</a><a href="#findings">Findings</a><a href="#case-study">Case study</a>
+  </nav>
+</section>
 
-<section class="detail"><div class="wrap"><p class="kicker">RESEARCH QUESTION</p><h2>How should an Agent <em>access video evidence?</em></h2><div class="info-grid"><div class="info"><span class="small">01 / PROBLEM</span><h3>Locating the bottleneck</h3><p>From a broad research goal, I identified evidence localization and context handling as bottlenecks, then investigated how prepared information changes downstream question answering.</p></div><div class="info"><span class="small">02 / METHOD</span><h3>Reusable semantic indexing</h3><p>A training-free hierarchy links events and details to source frames. I compared single-Agent frame inspection with a staged plan–retrieve–verify–answer workflow, and adapted VideoSEAL's retrieval backend.</p></div><div class="info"><span class="small">03 / EVALUATION</span><h3>Quality and resource use</h3><p>A stratified 300-question sample from a long-video benchmark supported paired comparisons and ablations of answer correctness, completion and online resource use.</p></div></div></div></section>
-<section class="detail"><div class="wrap two-col"><div><p class="kicker">FINDINGS & PUBLIC CODE</p><h2>Evidence, cost <em>and workflow design.</em></h2></div><div class="text-block"><p>On a context-feasible paired subset, semantic indexing used about 27% fewer full-workflow online tokens than an object-detection-and-tracking index, with similar observed correctness. Benefits varied with the downstream workflow and evidence budget.</p><p>In a supplementary paired comparison, additional staging did not demonstrate a clear answer-quality gain, while the simpler Agent route had lower recorded execution cost. These findings are specific to the tested configurations.</p><p>The public repository includes code, experiment records, result provenance and demo instructions. It supports offline replays and new-video preparation; fresh demo outputs are separate from the recorded thesis results.</p><p style="margin-top:18px"><a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/THESIS_ARTIFACT_INDEX.md" target="_blank" rel="noopener noreferrer">Results & provenance ↗</a></p></div></div></section>
+<section class="detail" id="system"><div class="wrap">
+  <p class="kicker">01 / SYSTEM DESIGN</p>
+  <h2>Build the map once. Inspect evidence when needed.</h2>
+  <div class="text-block section-copy">
+    <p>Starting from a broad research goal, I identified evidence localization and context handling as bottlenecks. I built a training-free semantic index that links event summaries to finer time intervals and source frames, so the same video representation can support different questions.</p>
+  </div>
+  <figure class="research-figure">
+    <a class="figure-image" href="{{ '/assets/images/thesis/system-overview.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="Open full-size system overview">
+      <img src="{{ '/assets/images/thesis/system-overview.webp' | relative_url }}" width="1801" height="1070" alt="Offline frame sampling, captioning and semantic grouping create a hierarchical map. The staged online workflow plans, checks map evidence, retrieves and inspects frames, then answers." decoding="async">
+    </a>
+    <figcaption><span class="figure-source">Figure 3.1 · Dissertation p. 6</span>Caption-based indexing and the Staged evidence loop. Direct answering and the adapted VideoSEAL workflow are separate execution configurations. <a href="{{ '/assets/images/thesis/system-overview.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a></figcaption>
+  </figure>
+  <dl class="method-comparison">
+    <div><dt>Staged</dt><dd>Separate planning, evidence investigation, optional frame review and final answering stages.</dd></div>
+    <div><dt>Direct</dt><dd>One answering Agent uses the map and can inspect source frames as needed.</dd></div>
+  </dl>
+</div></section>
+
+<section class="detail" id="evaluation"><div class="wrap">
+  <p class="kicker">02 / EVALUATION DESIGN</p>
+  <h2>A manageable sample with balanced question types</h2>
+  <div class="text-block section-copy">
+    <p>The main evaluation used 300 visual, five-choice questions across 12 long videos from HourVideo. Under limited resources, I sampled questions in proportion to the source question-type distribution and used paired comparisons and input ablations to study answer quality, completion and resource use.</p>
+  </div>
+  <figure class="research-figure figure-compact">
+    <a class="figure-image" href="{{ '/assets/images/thesis/question-distribution.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="Open full-size question distribution chart">
+      <img src="{{ '/assets/images/thesis/question-distribution.webp' | relative_url }}" width="1201" height="654" alt="The source and evaluation sample have closely matched proportions: about 57 percent reasoning, 32 percent perception, 7 percent summarisation and 3 percent navigation." loading="lazy" decoding="async">
+    </a>
+    <figcaption><span class="figure-source">Figure 4.1 · Dissertation p. 14</span>Each ring represents 100% of its own question set. Matching question types does not establish equal visual content or difficulty. <a href="{{ '/assets/images/thesis/question-distribution.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a></figcaption>
+  </figure>
+</div></section>
+
+<section class="detail" id="findings"><div class="wrap">
+  <p class="kicker">03 / EXPERIMENTAL FINDINGS</p>
+  <h2>Where the savings come from—and where they stop</h2>
+
+  <article class="finding">
+    <h3>Retrieval strategy changes downstream work</h3>
+    <div class="text-block section-copy"><p>I adapted VideoSEAL's retrieval backend to compare flat and hierarchical evidence access. At a nominal budget of 15, hierarchical retrieval reduced recorded processing time while retaining similar observed accuracy to Flat-30. The same advantage did not hold at budget 30.</p></div>
+    <p class="table-hint">Swipe to see all table columns →</p>
+    <div class="table-scroll" role="region" aria-label="Retrieval results, scroll horizontally on small screens" tabindex="0">
+      <table class="results-table">
+        <caption>Adapted VideoSEAL · 300 questions · Selected metrics from Table 5.3</caption>
+        <thead><tr><th scope="col">Retrieval</th><th scope="col">Correct</th><th scope="col">Completed</th><th scope="col">Recorded time</th><th scope="col">Image sends</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Flat-30</th><td>27.33%</td><td>254 / 300</td><td>32.62 h</td><td>21,492</td></tr>
+          <tr><th scope="row">Flat-15</th><td>25.33%</td><td>260 / 300</td><td>28.89 h</td><td>19,328</td></tr>
+          <tr><th scope="row">Hierarchical-8</th><td>26.00%</td><td>270 / 300</td><td>26.19 h</td><td>18,180</td></tr>
+          <tr class="focus-row"><th scope="row">Hierarchical-15</th><td>27.00%</td><td>270 / 300</td><td>26.10 h</td><td>18,336</td></tr>
+          <tr><th scope="row">Hierarchical-30</th><td>26.00%</td><td>249 / 300</td><td>33.45 h</td><td>22,028</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="result-note">Accuracy uses all 300 questions, counting non-completions as incorrect. Time sums one selected terminal attempt per question, including recorded failed-route work; it excludes superseded attempts and offline construction. It is not total elapsed time. The comparisons change both the index and retrieval procedure; similar accuracy does not establish statistical equivalence.</p>
+  </article>
+
+  <article class="finding">
+    <h3>A richer index can reduce later processing</h3>
+    <div class="result-pair">
+      <figure class="research-figure figure-tokens">
+        <a class="figure-image" href="{{ '/assets/images/thesis/online-token-cost.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="Open full-size online token chart">
+          <img src="{{ '/assets/images/thesis/online-token-cost.webp' | relative_url }}" width="1001" height="1389" alt="With the semantic R3 index, full-workflow tokens fall from 22.85 to 16.62 million on local paired150, and from 42.71 to 36.68 million with an API Planner on Eval300. Planner tokens increase in both cases." loading="lazy" decoding="async">
+        </a>
+        <figcaption><span class="figure-source">Figure 5.1 · Dissertation p. 21</span>R1: object detection and tracking. R3: semantic captions. Compare within each question set; labels are rounded independently. <a href="{{ '/assets/images/thesis/online-token-cost.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a></figcaption>
+      </figure>
+      <div class="text-block">
+        <p><strong>Local paired subset:</strong> R3 used 27.2% fewer online tokens across the full workflow, with 52 rather than 51 correct answers out of 150. More planning input was offset by less downstream processing.</p>
+        <p><strong>Context limits matter:</strong> the other 150 R3 questions exceeded the local Planner's context capacity. This result therefore applies to the context-feasible subset.</p>
+        <p><strong>Tokens and money are different measures:</strong> with an API Planner on all 300 questions, R3 used fewer total tokens but had a higher Planner API bill: $10.10 versus $4.97.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="finding">
+    <h3>Additional stages need to justify their cost</h3>
+    <div class="text-block section-copy"><p>Holding the semantic index and model fixed, I compared Direct answering with a Full Staged workflow on the same 100 questions. Direct used 70.3% less online API expenditure. The observed accuracy difference was not statistically significant.</p></div>
+    <div class="table-scroll" role="region" aria-label="Staged and Direct results" tabindex="0">
+      <table class="results-table">
+        <caption>Same 100 questions · R3 index and Haiku model · Table 5.6</caption>
+        <thead><tr><th scope="col">Metric</th><th scope="col">Full Staged</th><th scope="col">Direct</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Correct answers</th><td>24 / 100</td><td>32 / 100</td></tr>
+          <tr><th scope="row">Completed</th><td>97 / 100</td><td>99 / 100</td></tr>
+          <tr class="focus-row"><th scope="row">API cost / question</th><td>$0.1449</td><td>$0.0430</td></tr>
+          <tr><th scope="row">Model attempts / question</th><td>7.62</td><td>4.87</td></tr>
+          <tr><th scope="row">Unique frames / question</th><td>13.12</td><td>9.28</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="result-note">All 100 questions and failed-route consumption are included. Staged cost combines estimated historical planning cost with measured downstream cost; Direct covers its full API route. Offline construction is excluded. Accuracy difference: exploratory exact McNemar p = 0.169. These results describe the tested configurations, rather than a general ranking of Agent architectures.</p>
+  </article>
+</div></section>
+
+<section class="detail" id="case-study"><div class="wrap">
+  <p class="kicker">04 / QUALITATIVE CASE STUDY</p>
+  <h2>Speech changes what the map can tell you</h2>
+  <div class="text-block section-copy"><p>A separate EgoPolice case compares visual-only and speech-enhanced maps of the same recording. Speech changes event organization and some frame-selection choices. It can supply context that is absent from images, but a spoken reference to an action does not establish that the action is visibly shown.</p></div>
+  <figure class="research-figure">
+    <a class="figure-image" href="{{ '/assets/images/thesis/speech-map-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="Open full-size visual and speech map comparison">
+      <img src="{{ '/assets/images/thesis/speech-map-comparison.webp' | relative_url }}" width="1601" height="1338" alt="Visual-only indexing groups the recording into six regions; adding speech produces ten regions with coordination and medical-response context. The human reference is schematic and did not guide retrieval." loading="lazy" decoding="async">
+    </a>
+    <figcaption><span class="figure-source">Figure 5.2 · Dissertation p. 25</span>Model boundaries share a time-scaled axis. The post-hoc human reference is schematic; more regions alone do not mean better segmentation. <a href="{{ '/assets/images/thesis/speech-map-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a></figcaption>
+  </figure>
+  <details class="evidence-details">
+    <summary>View inspected frames and answers <span class="small">Police footage with visible injury</span></summary>
+    <figure class="research-figure">
+      <a class="figure-image" href="{{ '/assets/images/thesis/evidence-frame-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer" aria-label="Open full-size inspected frames and answer comparison">
+        <img src="{{ '/assets/images/thesis/evidence-frame-comparison.webp' | relative_url }}" width="1801" height="2219" alt="Three visual-only versus speech-enhanced comparisons show weapon presence, visible injury and ambiguous medical assistance. Frames retain inspection timestamps; the recovered medical-response answer remains a failed primary route." loading="lazy" decoding="async">
+      </a>
+      <figcaption><span class="figure-source">Figure 5.3 · Dissertation p. 26</span>Actual inspected frames and condensed answers for all three questions. This is a one-video illustration, not a quantitative accuracy result. The format-recovered response remains a failure in the primary evaluation. <a href="{{ '/assets/images/thesis/evidence-frame-comparison.webp' | relative_url }}" target="_blank" rel="noopener noreferrer">Open full size ↗</a></figcaption>
+    </figure>
+  </details>
+</div></section>
+
+<section class="detail"><div class="wrap">
+  <p class="kicker">EXPLORE THE WORK</p><h2>Code, demo instructions and recorded results</h2>
+  <div class="text-block section-copy"><p>The public repository contains the implementation, experiment records and result provenance. Demo instructions cover offline replays and new-video preparation. Fresh demo outputs are separate from the recorded thesis results.</p></div>
+  <div class="actions">
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence" target="_blank" rel="noopener noreferrer">Repository ↗</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/demo/README.md" target="_blank" rel="noopener noreferrer">Demo instructions ↗</a>
+    <a class="text-link" href="https://github.com/naxgotomakeit/thesis-av-evidence/blob/main/THESIS_ARTIFACT_INDEX.md" target="_blank" rel="noopener noreferrer">Results & provenance ↗</a>
+  </div>
+</div></section>

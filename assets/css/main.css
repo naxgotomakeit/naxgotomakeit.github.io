@@ -139,4 +139,61 @@ p { max-width: var(--reading); }
   .footer-end span { display: block; }
 }
 
+/* Project materials stay separate from the primary project-page links. */
+.project-entry .project-card { border-bottom: 0; }
+.project-entry:last-child { border-bottom: 1px solid var(--line); }
+.project-resources { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: -12px 36px 23px 50px; }
+.project-resources a { color: var(--accent); font-size: 14px; padding: 4px 0; text-decoration: underline; text-underline-offset: 4px; }
+.page-index { flex-wrap: wrap; justify-content: flex-start; gap: 10px 26px; margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
+.page-index a { padding: 3px 0; text-decoration: underline; text-underline-offset: 4px; }
+.section-copy { margin-top: 20px; }
+.research-figure { margin: 28px 0 0; min-width: 0; }
+.figure-image { display: block; padding: 16px; background: #fff; border: 1px solid var(--line); }
+.figure-image img { display: block; width: 100%; height: auto; }
+.figure-image:hover { border-color: var(--accent); }
+figcaption { max-width: 80ch; margin-top: 12px; font-size: 14px; line-height: 1.7; color: var(--muted); }
+.figure-source { display: block; color: var(--ink); font-weight: 500; margin-bottom: 4px; }
+figcaption a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.figure-compact { max-width: 540px; }
+.method-comparison { margin: 26px 0 0; }
+.method-comparison > div { display: grid; grid-template-columns: 90px minmax(0,1fr); gap: 20px; padding: 13px 0; border-top: 1px solid var(--line); }
+.method-comparison dt { font-weight: 600; }
+.method-comparison dd { margin: 0; color: var(--muted); font-size: 16px; }
+.finding { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line); }
+.finding > h3 { font-size: 22px; }
+.table-scroll { max-width: 100%; margin-top: 24px; overflow-x: auto; }
+.table-hint { display: none; }
+.table-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.results-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 15px; line-height: 1.6; font-variant-numeric: tabular-nums; }
+.results-table caption { text-align: left; font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+.results-table th, .results-table td { padding: 13px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.results-table thead th { border-top: 1px solid var(--line); font-weight: 600; }
+.results-table tbody th { font-weight: 500; }
+.results-table tbody th { white-space: nowrap; }
+.results-table td { white-space: nowrap; }
+.focus-row { background: #eef2ea; }
+.result-note { font-size: 14px; line-height: 1.75; color: var(--muted); margin-top: 16px; max-width: 85ch; }
+.result-pair { display: grid; grid-template-columns: minmax(0,350px) minmax(0,1fr); gap: 36px; align-items: start; margin-top: 24px; }
+.result-pair .research-figure { margin-top: 0; }
+.result-pair strong { color: var(--ink); font-weight: 500; }
+.evidence-details { margin-top: 30px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; }
+.evidence-details summary { cursor: pointer; font-size: 17px; font-weight: 500; color: var(--accent); }
+.evidence-details summary .small { display: block; margin: 5px 0 0 19px; font-weight: 400; }
+.evidence-details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.evidence-details .research-figure { margin-top: 20px; }
+
+@media (max-width: 700px) {
+  .project-resources { margin-left: 30px; margin-right: 24px; gap: 8px 20px; }
+  .page-index { gap: 8px 20px; margin-top: 24px; }
+  .figure-image { padding: 8px; }
+  .method-comparison > div { grid-template-columns: minmax(0,1fr); gap: 4px; }
+  .result-pair { grid-template-columns: minmax(0,1fr); gap: 24px; }
+  .figure-tokens { max-width: 350px; }
+  .results-table { font-size: 14px; }
+  .table-hint { display: block; margin-top: 22px; font-size: 13px; color: var(--muted); }
+  .table-hint + .table-scroll { margin-top: 10px; }
+  .results-table th, .results-table td { padding: 10px; }
+  .finding > h3 { font-size: 20px; }
+}
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
